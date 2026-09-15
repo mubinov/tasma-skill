@@ -1,0 +1,8 @@
+{
+  "name": "tasma",
+  "version": "1.0.0",
+  "description": "Lets coding agents manage Tasma projects, tasks and comments through the tasma CLI.",
+  "author": { "name": "Almaz Mubinov" },
+  "repository": "https://github.com/mubinov/tasma-skill",
+  "license": "MIT"
+}

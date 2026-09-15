@@ -1,0 +1,11 @@
+{
+  "name": "tasma",
+  "owner": { "name": "Almaz Mubinov" },
+  "plugins": [
+    {
+      "name": "tasma",
+      "source": "./",
+      "description": "Lets coding agents manage Tasma projects, tasks and comments through the tasma CLI."
+    }
+  ]
+}
