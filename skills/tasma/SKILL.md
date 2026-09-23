@@ -142,7 +142,7 @@ like a requirement to them.
 - Give a new task a ready status only when its work is clear enough to start
   without more questions.
 - Propose the split to the user. Create the tasks only after the user approves.
-- In the body of each new task, write its link: `Pre-task for <TAG>-<number>`,
+- In the body of each new task, write its relation: `Pre-task for <TAG>-<number>`,
   `Follow-up of <TAG>-<number>` or `Split from <TAG>-<number>`.
 
 ### Create a project
@@ -228,7 +228,10 @@ The quotes on `'TASMA_BODY'` stop the shell from changing `$` and backticks. Use
 - `--clear` removes one field. For `task edit`, the field names are `priority`,
   `labels`, `parent`, `blocked_by`, `step`, `workflow`, `order` and `body`. For
   `comment edit`, they are `author`, `collapsed` and `body`.
-- Tasma has no web link for a task. Name a task by its id. Do not make a URL for a task.
+- A task has a link: `tasma://task/<TAG>-<number>`. It opens the task in the macOS
+  application. When you name a task in the chat, write it as a markdown link with the
+  id as the text: `[<TAG>-<number>](tasma://task/<TAG>-<number>)`. Inside a task body
+  or a comment, write the id alone.
 - A task can be very large. `task view` does not show the bodies of collapsed
   comments. `comment list` shows the number, the size and the title of each
   comment. To read one comment, run `comment view`.
