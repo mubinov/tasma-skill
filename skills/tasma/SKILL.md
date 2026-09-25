@@ -24,7 +24,8 @@ manages this data. The `tasma` CLI sends all requests to the daemon.
   workflow. The step must be a step of the workflow of the task. A task
   without a workflow has no step. Tasma does not change the step by itself.
   The step changes only when the agent or the user sets it.
-- **Status.** Each project has its own list of statuses. A status in
+- **Status.** Each project has its own list of statuses. A project without
+  its own statuses takes them from the main configuration. A status in
   `final_statuses` means that the task is closed. The step and the status
   are different fields. A change to one field does not change the other.
 - **Comment.** A comment has a number, a title, an author and a body. A
@@ -199,6 +200,8 @@ command fails.
 | Change the configuration of a project | `tasma project edit <TAG> [--name <name>] [--path <path>] [--status <s>] [--default-status <s>] [--final-status <s>] [--priority <p>] [--workflow <w>] [--instruction <path>]` |
 | Change the tag of a project | `tasma project rename <old> <new>` |
 | Delete a project | `tasma project delete <TAG>` |
+| Show the main configuration | `tasma config view` |
+| Change the main configuration | `tasma config edit [--status <s>] [--default-status <s>] [--final-status <s>] [--priority <p>] [--workflows-path <path>]` |
 | List the workflows | `tasma workflow list` |
 | Show a workflow | `tasma workflow show <workflow>` |
 
@@ -226,7 +229,8 @@ The quotes on `'TASMA_BODY'` stop the shell from changing `$` and backticks. Use
   `--step` in one command.
 - `--label` and `--blocked-by` replace the stored list. So do `--status`,
   `--final-status`, `--priority`, `--workflow` and `--instruction` of
-  `project edit`. To add one value, give all the old values and the new value.
+  `project edit`, and `--status`, `--final-status` and `--priority` of
+  `config edit`. To add one value, give all the old values and the new value.
 - `--body` and `--body-file` replace the body. `--append` adds the text after the
   body. It works only with `task edit` and `comment edit`.
 - A value that starts with `-` needs the form `--<flag>=<value>`, for example
@@ -235,7 +239,8 @@ The quotes on `'TASMA_BODY'` stop the shell from changing `$` and backticks. Use
   `labels`, `parent`, `blocked_by`, `step`, `workflow`, `order` and `body`. For
   `comment edit`, they are `author`, `collapsed` and `body`. For `project edit`,
   they are `name`, `statuses`, `default_status`, `final_statuses`, `priorities`,
-  `workflows` and `instructions`.
+  `workflows` and `instructions`. For `config edit`, they are `statuses`,
+  `default_status`, `final_statuses`, `priorities` and `workflows_path`.
 - A task has a link: `tasma://task/<TAG>-<number>`. It opens the task in the macOS
   application. When you name a task in the chat, write it as a markdown link with the
   id as the text: `[<TAG>-<number>](tasma://task/<TAG>-<number>)`. Inside a task body
