@@ -153,8 +153,10 @@ Run it only after the user agrees.
 
 ### Delete
 
-Run `tasma task delete` or `tasma comment delete` only when the user asks for that
-deletion in their own words. Do not delete anything on your own decision.
+Run `tasma task delete`, `tasma comment delete` or `tasma project delete` only when
+the user asks for that deletion in their own words. Do not delete anything on your
+own decision. `tasma project delete` removes all tasks of the project and does not
+ask for confirmation.
 
 ## Commands
 
@@ -194,6 +196,9 @@ command fails.
 | List the projects | `tasma project list` |
 | Show the configuration of a project | `tasma project view <TAG>` |
 | Create a project | `tasma project create --path <path> [--name <name>] [--tag <TAG>]` |
+| Change the configuration of a project | `tasma project edit <TAG> [--name <name>] [--path <path>] [--status <s>] [--default-status <s>] [--final-status <s>] [--priority <p>] [--workflow <w>] [--instruction <path>]` |
+| Change the tag of a project | `tasma project rename <old> <new>` |
+| Delete a project | `tasma project delete <TAG>` |
 | List the workflows | `tasma workflow list` |
 | Show a workflow | `tasma workflow show <workflow>` |
 
@@ -219,15 +224,18 @@ The quotes on `'TASMA_BODY'` stop the shell from changing `$` and backticks. Use
   note and error starts with `tasma:`.
 - To set a workflow and a step on a task without a workflow, give `--workflow` and
   `--step` in one command.
-- `--label` and `--blocked-by` replace the stored list. To add one value, give all
-  the old values and the new value.
+- `--label` and `--blocked-by` replace the stored list. So do `--status`,
+  `--final-status`, `--priority`, `--workflow` and `--instruction` of
+  `project edit`. To add one value, give all the old values and the new value.
 - `--body` and `--body-file` replace the body. `--append` adds the text after the
   body. It works only with `task edit` and `comment edit`.
 - A value that starts with `-` needs the form `--<flag>=<value>`, for example
   `--order=-1`.
 - `--clear` removes one field. For `task edit`, the field names are `priority`,
   `labels`, `parent`, `blocked_by`, `step`, `workflow`, `order` and `body`. For
-  `comment edit`, they are `author`, `collapsed` and `body`.
+  `comment edit`, they are `author`, `collapsed` and `body`. For `project edit`,
+  they are `name`, `statuses`, `default_status`, `final_statuses`, `priorities`,
+  `workflows` and `instructions`.
 - A task has a link: `tasma://task/<TAG>-<number>`. It opens the task in the macOS
   application. When you name a task in the chat, write it as a markdown link with the
   id as the text: `[<TAG>-<number>](tasma://task/<TAG>-<number>)`. Inside a task body
