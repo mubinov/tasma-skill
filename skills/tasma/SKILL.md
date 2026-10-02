@@ -5,6 +5,17 @@ license: MIT
 allowed-tools: Bash(tasma:*)
 ---
 
+## Contents
+
+This file has the 5 sections below. The last section is "Hard rules and failures".
+If your copy of this file ends before that section, read the full file.
+
+1. Tasma
+2. Run a workflow step
+3. Direct requests
+4. Commands
+5. Hard rules and failures
+
 ## Tasma
 
 Tasma is a local task manager. Its data is in `~/.tasma`. A local daemon
