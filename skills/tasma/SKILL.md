@@ -58,8 +58,11 @@ Use this procedure when the user asks to run a step of a task, for example
 
 1. If the request names a task id, use that task.
 2. If the current git branch is `<TAG>-<number>` and that task exists, use that task.
-3. If not, find the most suitable task to continue or to start. Write the task id in
-   the first line of your reply.
+3. If not, find the most suitable task to continue or to start. If the request
+   contains words of the title or the text of the task, run
+   `tasma task list --search '<text>'` with these words as `<text>`. Replace each
+   `'` in the words with a space: the single quotes stop the shell from changing
+   `$` and backticks. Write the task id in the first line of your reply.
 
 ### Start the task
 
@@ -181,7 +184,7 @@ command fails.
 |---|---|
 | Show a task | `tasma task view <TAG>-<number>` |
 | Show a task with the bodies of collapsed comments | `tasma task view <TAG>-<number> --full` |
-| List tasks | `tasma task list [--status <s>] [--priority <p>] [--step <s>] [--label <l>] [--parent <id>] [--blocked \| --unblocked] [--project <TAG>]` |
+| List tasks | `tasma task list [--search <text>] [--status <s>] [--priority <p>] [--step <s>] [--label <l>] [--parent <id>] [--blocked \| --unblocked] [--project <TAG>]` |
 | Create a task | `tasma task create --title <title> [--body-file -] [--status <s>] [--priority <p>] [--workflow <w>] [--parent <id>] [--label <l>] [--blocked-by <id>] [--project <TAG>]` |
 | Change fields | `tasma task edit <TAG>-<number> [--title <title>] [--status <s>] [--priority <p>] [--workflow <w>] [--step <s>] [--parent <id>] [--label <l>] [--blocked-by <id>] [--order <n>]` |
 | Change the body | `tasma task edit <TAG>-<number> --body-file - [--append]` |
