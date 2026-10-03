@@ -166,12 +166,17 @@ If no project includes the working directory, `task list` and `task create` stop
 with exit code 2. Tell the user, and offer `tasma project create --path <folder>`.
 Run it only after the user agrees.
 
+### Create, change or delete a workflow
+
+Before you create, change or delete a workflow, or answer a question about
+workflows, read `workflows.md` in the folder of this file.
+
 ### Delete
 
-Run `tasma task delete`, `tasma comment delete` or `tasma project delete` only when
-the user asks for that deletion in their own words. Do not delete anything on your
-own decision. `tasma project delete` removes all tasks of the project and does not
-ask for confirmation.
+Run `tasma task delete`, `tasma comment delete`, `tasma project delete` or
+`tasma workflow delete` only when the user asks for that deletion in their own
+words. Do not delete anything on your own decision. `tasma project delete` removes
+all tasks of the project and does not ask for confirmation.
 
 ## Commands
 
@@ -185,7 +190,7 @@ command fails.
 | Show a task | `tasma task view <TAG>-<number>` |
 | Show a task with the bodies of collapsed comments | `tasma task view <TAG>-<number> --full` |
 | List tasks | `tasma task list [--search <text>] [--status <s>] [--priority <p>] [--step <s>] [--label <l>] [--parent <id>] [--blocked \| --unblocked] [--project <TAG>]` |
-| Create a task | `tasma task create --title <title> [--body-file -] [--status <s>] [--priority <p>] [--workflow <w>] [--parent <id>] [--label <l>] [--blocked-by <id>] [--project <TAG>]` |
+| Create a task | `tasma task create --title <title> [--body <text>] [--body-file -] [--status <s>] [--priority <p>] [--workflow <w>] [--step <s>] [--parent <id>] [--label <l>] [--blocked-by <id>] [--order <n>] [--project <TAG>]` |
 | Change fields | `tasma task edit <TAG>-<number> [--title <title>] [--status <s>] [--priority <p>] [--workflow <w>] [--step <s>] [--parent <id>] [--label <l>] [--blocked-by <id>] [--order <n>]` |
 | Change the body | `tasma task edit <TAG>-<number> --body-file - [--append]` |
 | Remove a field | `tasma task edit <TAG>-<number> --clear <field>` |
@@ -197,8 +202,8 @@ command fails.
 |---|---|
 | List the comments | `tasma comment list <TAG>-<number>` |
 | Show one comment | `tasma comment view <TAG>-<number> <n>` |
-| Add a comment | `tasma comment add <TAG>-<number> --title <title> --body-file -` |
-| Change a comment | `tasma comment edit <TAG>-<number> <n> [--title <title>] [--body-file - [--append]]` |
+| Add a comment | `tasma comment add <TAG>-<number> --title <title> --body-file - [--author <name>] [--collapsed]` |
+| Change a comment | `tasma comment edit <TAG>-<number> <n> [--title <title>] [--author <name>] [--body-file - [--append]]` |
 | Collapse a comment | `tasma comment edit <TAG>-<number> <n> --collapsed` |
 | Expand a comment | `tasma comment edit <TAG>-<number> <n> --clear collapsed` |
 | Delete a comment | `tasma comment delete <TAG>-<number> <n>` |
@@ -218,6 +223,9 @@ command fails.
 | Change the main configuration | `tasma config edit [--status <s>] [--default-status <s>] [--final-status <s>] [--priority <p>] [--workflows-path <path>]` |
 | List the workflows | `tasma workflow list` |
 | Show a workflow | `tasma workflow show <workflow>` |
+| Create a workflow | `tasma workflow create <name> --step <step>,<owner>,<file> [--step ...] [--title <title>] [--instruction <path>]` |
+| Change a workflow | `tasma workflow edit <name> [--title <title>] [--step <step>,<owner>,<file> ...] [--instruction <path>]` |
+| Delete a workflow | `tasma workflow delete <name>` |
 
 ### Text with more than one line
 
@@ -243,8 +251,16 @@ The quotes on `'TASMA_BODY'` stop the shell from changing `$` and backticks. Use
   `--step` in one command.
 - `--label` and `--blocked-by` replace the stored list. So do `--status`,
   `--final-status`, `--priority`, `--workflow` and `--instruction` of
-  `project edit`, and `--status`, `--final-status` and `--priority` of
-  `config edit`. To add one value, give all the old values and the new value.
+  `project edit`, `--status`, `--final-status` and `--priority` of
+  `config edit`, and `--step` and `--instruction` of `workflow edit`. To add one
+  value, give all the old values and the new value. To change one step, give all
+  the steps again.
+- A `--step` value is `<step>,<owner>,<file>`. The step name and the owner cannot
+  contain `,`.
+- A relative path in `--step`, `--instruction`, `--path` and `--workflows-path`
+  starts at the working directory. A file in `--step` or `--instruction` must exist.
+- `workflow edit` prints a `tasma:` note with `step-stale` for each open task on a
+  step that the edit removed. The edit does not change these tasks.
 - `--body` and `--body-file` replace the body. `--append` adds the text after the
   body. It works only with `task edit` and `comment edit`.
 - A value that starts with `-` needs the form `--<flag>=<value>`, for example
@@ -254,7 +270,8 @@ The quotes on `'TASMA_BODY'` stop the shell from changing `$` and backticks. Use
   `comment edit`, they are `author`, `collapsed` and `body`. For `project edit`,
   they are `name`, `statuses`, `default_status`, `final_statuses`, `priorities`,
   `workflows` and `instructions`. For `config edit`, they are `statuses`,
-  `default_status`, `final_statuses`, `priorities` and `workflows_path`.
+  `default_status`, `final_statuses`, `priorities` and `workflows_path`. For
+  `workflow edit`, they are `title` and `instructions`.
 - A task has a link: `tasma://task/<TAG>-<number>`. It opens the task in the macOS
   application. When you name a task in the chat, write it as a markdown link with the
   id as the text: `[<TAG>-<number>](tasma://task/<TAG>-<number>)`. Inside a task body
@@ -267,12 +284,18 @@ The quotes on `'TASMA_BODY'` stop the shell from changing `$` and backticks. Use
 
 ### Use only the CLI
 
-- Do not read, edit or delete files under `~/.tasma` with other tools. Use the
-  `tasma` CLI for all data of projects, tasks and comments. A task file can be too
-  large to read, and a direct edit skips the checks of the daemon.
-- Read the instruction documents at the paths that `tasma workflow show` and
-  `tasma project view` print. This is the only exception. The CLI does not print
-  the text of these documents.
+- Do not read, edit or delete files under `~/.tasma` with other tools. Instruction
+  documents and the other files of a workflow folder are the only exceptions. Use
+  the `tasma` CLI for all data of projects, tasks, comments and workflows, and for
+  the configuration files. A task file can be too large to read, and a direct edit
+  skips the checks of the daemon.
+- An instruction document is a file whose path `tasma workflow show` or
+  `tasma project view` prints, except `workflow.yml` (the `config` row). You can read
+  and edit these files with your file tools, also under `~/.tasma`. The CLI does not
+  print the text of these documents.
+- A workflow folder can also hold files that are not documents. When `workflows.md`
+  tells you to, you can list, read and copy the files of a workflow folder, also
+  under `~/.tasma`. Do not read, copy or edit `workflow.yml`.
 
 ### `tasma` is not installed
 

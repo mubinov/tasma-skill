@@ -9,6 +9,8 @@ Tasma workflows and to manage tasks and comments.
 - Runs the steps of your Tasma workflows. It reads the workflow, project and step
   instructions, and follows them.
 - Creates, shows and lists tasks, and writes comments.
+- Creates, changes and deletes workflows with you, and writes their instruction
+  documents.
 
 ## Requirements
 
