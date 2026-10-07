@@ -164,7 +164,12 @@ like a requirement to them.
 
 If no project includes the working directory, `task list` and `task create` stop
 with exit code 2. Tell the user, and offer `tasma project create --path <folder>`.
-Run it only after the user agrees.
+Run it only after the user agrees, by the procedure in `projects.md`.
+
+### Create, change or remove a project
+
+Before you create, change, rename or remove a project, or answer a question about
+projects, read `projects.md` in the folder of this file.
 
 ### Create, change or delete a workflow
 
