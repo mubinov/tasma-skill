@@ -272,9 +272,10 @@ The quotes on `'TASMA_BODY'` stop the shell from changing `$` and backticks. Use
   `workflows` and `instructions`. For `config edit`, they are `statuses`,
   `default_status`, `final_statuses`, `priorities` and `workflows_path`. For
   `workflow edit`, they are `title` and `instructions`.
-- A task has a link: `tasma://task/<TAG>-<number>`. It opens the task in the macOS
-  application. When you name a task in the chat, write it as a markdown link with the
-  id as the text: `[<TAG>-<number>](tasma://task/<TAG>-<number>)`. Inside a task body
+- A task has a link: `http://127.0.0.1:8278/task/<TAG>-<number>`. The Tasma daemon
+  serves this page, and the page opens the task in the macOS application. When you
+  name a task in the chat, write it as a markdown link with the id as the text:
+  `[<TAG>-<number>](http://127.0.0.1:8278/task/<TAG>-<number>)`. Inside a task body
   or a comment, write the id alone.
 - A task can be very large. `task view` does not show the bodies of collapsed
   comments. `comment list` shows the number, the size and the title of each
