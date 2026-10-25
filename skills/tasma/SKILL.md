@@ -91,9 +91,27 @@ If an instruction document says something different from this skill, the documen
 
 ### End the step
 
-- When a step is complete, write a hand-off as your last message:
+- When a step is complete, first write the report comment, and set the next step
+  and the status.
+- Then run `tasma chat start <TAG>-<number>` one time. It starts the chat of the next
+  step in the Tasma app. Do this also when the next step is a `human` step: its chat
+  tells the user what to do. Do not run it when:
+  - the workflow has no next step;
+  - an action that only the user can do must come before the next step;
+  - the task is blocked by a task that is not closed;
+  - the next step is an `agent` step that already ran on this task, no `human` step
+    ran after it, and no instruction document that you read limits the number of
+    rounds. The comments show which steps ran. Without this rule, a loop of `agent`
+    steps can start an unlimited number of chats;
+  - an instruction document tells you not to start the next chat.
+- If `tasma chat start` fails, do not run it again. Each run can make one more chat.
+  This rule does not apply to the second run that "Codex sandbox" asks for.
+- If `tasma chat start` exits 2 with `unknown command: chat`, the Tasma app is older
+  than this skill. In the hand-off, write `not started: update the Tasma app`.
+- Then write a hand-off as your last message:
   1. `# Done: <from-step> → <to-step>`, and a summary of one line.
-  2. The name of the next step.
+  2. The next step and its chat: `started chat <n>`, `chat <n> already open`, or
+     `not started: <reason>`.
   3. `# Required from user`, with each action that only the user can do. If there is
      no such action, do not write this block.
 - Do not start the next step in the same chat.
@@ -213,6 +231,12 @@ command fails.
 | Expand a comment | `tasma comment edit <TAG>-<number> <n> --clear collapsed` |
 | Delete a comment | `tasma comment delete <TAG>-<number> <n>` |
 
+### Chats
+
+| Purpose | Command |
+|---|---|
+| Start the chat of the current step of a task, in the Tasma app | `tasma chat start <TAG>-<number>` |
+
 ### Projects and workflows
 
 | Purpose | Command |
@@ -278,7 +302,7 @@ The quotes on `'TASMA_BODY'` stop the shell from changing `$` and backticks. Use
   `default_status`, `final_statuses`, `priorities` and `workflows_path`. For
   `workflow edit`, they are `title` and `instructions`.
 - A task has a link: `http://127.0.0.1:8278/task/<TAG>-<number>`. The Tasma daemon
-  serves this page, and the page opens the task in the macOS application. When you
+  serves this page, and the page opens the task in the Tasma app. When you
   name a task in the chat, write it as a markdown link with the id as the text:
   `[<TAG>-<number>](http://127.0.0.1:8278/task/<TAG>-<number>)`. Inside a task body
   or a comment, write the id alone.
@@ -311,7 +335,8 @@ installed, and give this link: https://github.com/mubinov/tasma.
 ### A command fails
 
 - Exit code 1. Tasma refused the request. Read the error on stderr, correct the
-  command and run it again.
+  command and run it again. For `tasma chat start`, do not run it again: see "End
+  the step".
 - Exit code 2. The command has a usage error, or no project includes the working
   directory. Run `tasma <group> <command> --help`. For a missing project, see
   "Create a project".

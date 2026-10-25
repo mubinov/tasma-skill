@@ -8,13 +8,16 @@ Tasma workflows and to manage tasks and comments.
 
 - Runs the steps of your Tasma workflows. It reads the workflow, project and step
   instructions, and follows them.
+- At the end of a workflow step, starts the chat of the next step in the Tasma app.
+  A rule in your instruction documents can stop this.
 - Creates, shows and lists tasks, and writes comments.
 - Creates, changes and deletes workflows with you, and writes their instruction
   documents.
 
 ## Requirements
 
-The `tasma` CLI on your `PATH`. See https://github.com/mubinov/tasma.
+The `tasma` CLI on your `PATH`, from a Tasma version that has the `tasma chat start`
+command. To check, run `tasma chat --help`. See https://github.com/mubinov/tasma.
 
 ## Install
 

@@ -52,6 +52,18 @@ workflow, Common questions.
     workflow and no project uses it.
 - **Tasma does not move a task.** Only the agent or the user changes the step. So the
   step document must name the next step for each result.
+- **The next chat.** At the end of a step, the agent starts the chat of the next step
+  with `tasma chat start`, also for a `human` step.
+  - The agent does not start it when the task is blocked by a task that is not
+    closed.
+  - The agent does not start it when the next step is an `agent` step that already
+    ran on the task and no `human` step ran after it. To let such a loop of `agent`
+    steps continue, write a limit for the number of rounds in the workflow or
+    project instructions, or in the document of each `agent` step of the loop. The
+    agent of a step does not read the documents of the other steps.
+  - To stop the start, write a rule in the document of the step that ends, or in the
+    workflow or project instructions. The agent reads only these documents before
+    the start, so a rule in the document of the next step has no effect.
 - **Projects.** `workflows` in the project configuration lists the workflows that its
   tasks can use.
   - The first workflow in the list is the default for `task create`.
@@ -230,6 +242,12 @@ Give these answers with no research.
 - **Why did the task not go to the next step?** Tasma does not move tasks. The agent
   sets the next step because the step document tells it to. If a document does not
   name the next step, add the next step to it.
+- **Why did a chat start by itself?** The agent of the previous step started it. To
+  stop this after a step, write a rule in the document of that step.
+- **Why did the chat of the next step not start?** The hand-off of the previous step
+  gives the reason. For a loop of `agent` steps, write a limit for the number of
+  rounds in the workflow or project instructions, or in the document of each
+  `agent` step of the loop.
 - **Where are my workflows and documents?** `tasma config view` shows
   `workflows_path`. `tasma workflow show <name>` shows the path of each file.
 - **Can two workflows use the same step document?** Yes. A change to the document
