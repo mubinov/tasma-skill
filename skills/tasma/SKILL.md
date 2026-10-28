@@ -106,8 +106,6 @@ If an instruction document says something different from this skill, the documen
   - an instruction document tells you not to start the next chat.
 - If `tasma chat start` fails, do not run it again. Each run can make one more chat.
   This rule does not apply to the second run that "Codex sandbox" asks for.
-- If `tasma chat start` exits 2 with `unknown command: chat`, the Tasma app is older
-  than this skill. In the hand-off, write `not started: update the Tasma app`.
 - Then write a hand-off as your last message:
   1. `# Done: <from-step> → <to-step>`, and a summary of one line.
   2. The next step and its chat: `started chat <n>`, `chat <n> already open`, or
@@ -194,6 +192,12 @@ projects, read `projects.md` in the folder of this file.
 Before you create, change or delete a workflow, or answer a question about
 workflows, read `workflows.md` in the folder of this file.
 
+### Restart a step
+
+Run `tasma chat start <TAG>-<number> --restart` only when the user asks for a
+restart. If the user names a step that is not the current step, tell the user and
+do not run the command.
+
 ### Delete
 
 Run `tasma task delete`, `tasma comment delete`, `tasma project delete` or
@@ -236,6 +240,7 @@ command fails.
 | Purpose | Command |
 |---|---|
 | Start the chat of the current step of a task, in the Tasma app | `tasma chat start <TAG>-<number>` |
+| Restart the chat of the current step of a task | `tasma chat start <TAG>-<number> --restart` |
 
 ### Projects and workflows
 
