@@ -258,6 +258,7 @@ command fails.
 | List the workflows | `tasma workflow list` |
 | Show a workflow | `tasma workflow show <workflow>` |
 | Create a workflow | `tasma workflow create <name> --step <step>,<owner>,<file> [--step ...] [--title <title>] [--instruction <path>]` |
+| Install the base workflow that ships with Tasma. Offer it only by "Create a project" in `projects.md` | `tasma workflow install dev` |
 | Change a workflow | `tasma workflow edit <name> [--title <title>] [--step <step>,<owner>,<file> ...] [--instruction <path>]` |
 | Delete a workflow | `tasma workflow delete <name>` |
 

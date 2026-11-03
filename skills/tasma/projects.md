@@ -58,14 +58,20 @@ tag, Remove a project, Common questions.
    3. **Workflows:** show the workflows of `tasma workflow list`. The user picks
       none, one or more, and the default. A `tasma: note: workflow-missing` line on
       stderr names a folder in `workflows_path` that is not a workflow. Do not offer
-      it.
+      it. An empty list with no `tasma: note:` line on stderr is rare: the setup in
+      the Tasma app did not complete. Only in this case, offer the base workflow
+      `dev`, which ships with Tasma, as the default. For an empty list with a note,
+      show the note to the user and do not offer `dev`.
 3. Run `tasma project create --path <folder> --name <name>`. If the user gave a tag,
    add `--tag <tag>`. If the folder name gives no tag (see "Tag" in the Reference),
    ask the user for a tag before you run the command, and add `--tag <tag>`.
 4. If the user picked workflows, run `tasma project edit <TAG> --workflow ...` with
-   the default first.
+   the default first. If the user picked the base `dev`, run
+   `tasma workflow install dev` before this edit. If the install fails, show the
+   error to the user, do not change `workflows_path`, do not move a folder, and go
+   to step 5.
 5. Run `tasma project view <TAG>`. Tell the user the tag, the folder and the
-   workflows.
+   workflows. After an install, also tell the user the folder that it printed.
 
 ## Change a project
 

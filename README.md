@@ -16,8 +16,9 @@ Tasma workflows and to manage tasks and comments.
 
 ## Requirements
 
-The `tasma` CLI on your `PATH`, from a Tasma version that has the `tasma chat start`
-command. To check, run `tasma chat --help`. See https://github.com/mubinov/tasma.
+The `tasma` CLI on your `PATH`, from a Tasma version that has the
+`tasma workflow install` command. To check, run `tasma workflow install --help`. See
+https://github.com/mubinov/tasma.
 
 ## Install
 

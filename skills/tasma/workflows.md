@@ -19,6 +19,11 @@ workflow, Common questions.
   names. `workflow delete` removes the folder with all its files.
 - **Who writes `workflow.yml`.** The daemon writes it, through `workflow create` and
   `workflow edit`. Do not write it by hand: a hand edit skips the checks.
+- **Base workflow.** Tasma ships one workflow, `dev`, for engineering tasks.
+  `tasma workflow install dev` copies its documents to a folder outside `~/.tasma`
+  and creates the workflow. It prints `installed  <folder>`, or `exists` with no
+  change when a workflow `dev` exists. It adds the workflow to no project. Do not
+  offer it, except by "Create a project" in `projects.md`.
 - **Workflow name.** 1 to 255 characters from `a-z`, `0-9`, `-` and `_`. It starts
   and ends with a letter or a digit. A workflow cannot get a new name.
 - **Step name.** Characters from `a-z`, `0-9`, `-`, `_` and `:`. It starts and ends
