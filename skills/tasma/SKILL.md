@@ -135,6 +135,13 @@ the steps to skip.
 
 ## Direct requests
 
+### A chat without a task
+
+When the system prompt says that a chat has no task and no workflow step, each
+message is a direct request. Do not start a task, write a step report or a hand-off,
+or run `tasma chat start`, unless the user asks. To answer a question about a task,
+run `tasma task view <TAG>-<number>`.
+
 ### Create a task
 
 When the user says "create a task" or "new task", only create the task. Do not
