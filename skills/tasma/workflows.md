@@ -17,13 +17,16 @@ workflow, Common questions.
   `workflow.yml` (`config`), the workflow instructions and the steps. The folder can
   also hold other files, for example documents, scripts or templates that a document
   names. `workflow delete` removes the folder with all its files.
-- **Who writes `workflow.yml`.** The daemon writes it, through `workflow create` and
-  `workflow edit`. Do not write it by hand: a hand edit skips the checks.
+- **Who writes `workflow.yml`.** The daemon writes it, through `workflow create`,
+  `workflow install` and `workflow edit`. Do not write it by hand: a hand edit skips
+  the checks.
 - **Base workflow.** Tasma ships one workflow, `dev`, for engineering tasks.
-  `tasma workflow install dev` copies its documents to a folder outside `~/.tasma`
-  and creates the workflow. It prints `installed  <folder>`, or `exists` with no
-  change when a workflow `dev` exists. It adds the workflow to no project. Do not
-  offer it, except by "Create a project" in `projects.md`.
+  `tasma workflow install dev` copies its documents into its workflow folder
+  `<workflows_path>/dev/`, next to `workflow.yml`, and creates the workflow.
+  `tasma workflow show dev` prints their paths. The install prints
+  `installed  <folder>`, or `exists` with no change when a workflow `dev` exists. It
+  adds the workflow to no project. Do not offer it, except by "Create a project" in
+  `projects.md`.
 - **Workflow name.** 1 to 255 characters from `a-z`, `0-9`, `-` and `_`. It starts
   and ends with a letter or a digit. A workflow cannot get a new name.
 - **Step name.** Characters from `a-z`, `0-9`, `-`, `_` and `:`. It starts and ends
@@ -160,7 +163,8 @@ offer to start from a copy of it.
 4. **Change of structure:**
    - **Add a step:** write its document first, by the rule for a new document. Put
      it in the folder of the other documents of the workflow if that folder is
-     outside `~/.tasma`. If not, put it in a folder that the user confirms, by the
+     outside `~/.tasma`, or if it is the workflow folder `<workflows_path>/<name>/`
+     or a folder inside it. If not, put it in a folder that the user confirms, by the
      rule of interview item 6. Then change the next-step text in the documents of the
      steps before it.
    - **Remove or rename a step:** first find the tasks on that step with
@@ -270,5 +274,5 @@ Give these answers with no research.
   git repo, then run `tasma config edit --workflows-path <folder>`. The command does
   not move files. It fails if a workflow that a project lists is not in the new
   folder. The agent does not move the workflow folders: the user moves them.
-- **Can the agent edit `workflow.yml` by hand?** No. Only `workflow create` and
-  `workflow edit` write it.
+- **Can the agent edit `workflow.yml` by hand?** No. Only `workflow create`,
+  `workflow install` and `workflow edit` write it.

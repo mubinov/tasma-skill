@@ -337,8 +337,9 @@ The quotes on `'TASMA_BODY'` stop the shell from changing `$` and backticks. Use
   and edit these files with your file tools, also under `~/.tasma`. The CLI does not
   print the text of these documents.
 - A workflow folder can also hold files that are not documents. When `workflows.md`
-  tells you to, you can list, read and copy the files of a workflow folder, also
-  under `~/.tasma`. Do not read, copy or edit `workflow.yml`.
+  tells you to, you can list, read and copy the files of a workflow folder, and write
+  a new document in it, also under `~/.tasma`. Do not read, copy or edit
+  `workflow.yml`.
 
 ### `tasma` is not installed
 
